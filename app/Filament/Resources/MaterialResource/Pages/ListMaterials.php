@@ -17,6 +17,24 @@ class ListMaterials extends ListRecords
     protected static string $resource = MaterialResource::class;
 
     /**
+     * @return string[]
+     */
+    protected function getHeaderWidgets() : array
+    {
+        return [
+            MaterialResource\Widgets\MaterialChart::class,
+        ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeaderWidgetsColumns() : int|string|array
+    {
+        return 1;
+    }
+
+    /**
      * @param  Table $table
      * @return Table
      */

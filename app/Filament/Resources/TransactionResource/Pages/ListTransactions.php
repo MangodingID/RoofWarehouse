@@ -17,6 +17,28 @@ class ListTransactions extends ListRecords
 {
     protected static string $resource = TransactionResource::class;
 
+    /**
+     * @return string[]
+     */
+    protected function getHeaderWidgets() : array
+    {
+        return [
+            TransactionResource\Widgets\TransactionChart::class,
+        ];
+    }
+
+    /**
+     * @return int|string|array
+     */
+    public function getHeaderWidgetsColumns() : int|string|array
+    {
+        return 1;
+    }
+
+    /**
+     * @param  Table $table
+     * @return Table
+     */
     public function table(Table $table) : Table
     {
         return $table

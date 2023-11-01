@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Widgets;
+namespace App\Filament\Resources\ProductionResource\Widgets;
 
 use App\Models\Production;
 use App\Models\Warehouse;
@@ -8,22 +8,30 @@ use Filament\Widgets\ChartWidget;
 
 class ProductionChart extends ChartWidget
 {
-    protected static ?string $heading = 'Chart';
+    /**
+     * @var string|null
+     */
+    protected static ?string $heading = 'Produksi';
 
+    /**
+     * @var string|null
+     */
     protected static ?string $maxHeight = '250px';
 
+    /**
+     * @return array|mixed[]
+     */
     protected function getData() : array
     {
-        $warehouses = Warehouse::get()->map(function (Warehouse $warehouse, $i) {
+        $warehouses = Warehouse::warehouse()->get()->map(function (Warehouse $warehouse, $i) {
             $bg = [
                 'rgba(255, 99, 132, .2)',
-                'rgba(45, 212, 191, .4)',
                 'rgba(45, 212, 191, .4)',
             ];
 
             $data = [];
             foreach (range(0, 12) as $month) {
-                $data[] = Production::where('warehouse_id', $warehouse->id)->whereMonth('date', $month)->whereYear('date', date('Y'))->sum('result');
+                $data[] = Production::where('warehouse_id', $warehouse->id)->whereMonth('date', $month)->whereYear('date', date('Y'))->sum('amount');
             }
 
             return [
@@ -41,7 +49,7 @@ class ProductionChart extends ChartWidget
     }
 
     /**
-     * @return array|mixed[]|null
+     * @return array
      */
     protected function getOptions() : ?array
     {
@@ -52,7 +60,7 @@ class ProductionChart extends ChartWidget
                 'y' => [
                     'title' => [
                         'display' => true,
-                        'text'    => 'Jumlah Transaksi',
+                        'text'    => 'Jumlah Produksi Sirap',
                     ],
                 ],
             ],

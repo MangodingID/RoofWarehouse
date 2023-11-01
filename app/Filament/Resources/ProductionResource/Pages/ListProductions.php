@@ -19,6 +19,28 @@ class ListProductions extends ListRecords
 {
     protected static string $resource = ProductionResource::class;
 
+    /**
+     * @return string[]
+     */
+    protected function getHeaderWidgets() : array
+    {
+        return [
+            ProductionResource\Widgets\ProductionChart::class,
+        ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeaderWidgetsColumns() : int|string|array
+    {
+        return 1;
+    }
+
+    /**
+     * @param  Table $table
+     * @return Table
+     */
     public function table(Table $table) : Table
     {
         return $table
@@ -50,7 +72,7 @@ class ListProductions extends ListRecords
      */
     public function getTabs() : array
     {
-        $warehouses = Warehouse::get()->flatMap(function (Warehouse $warehouse) {
+        $warehouses = Warehouse::warehouse()->get()->flatMap(function (Warehouse $warehouse) {
             return [
                 Str::slug($warehouse->name) => Tab::make()->label($warehouse->name)->query(function ($query) use ($warehouse) {
                     $query->where('warehouse_id', $warehouse->id);
