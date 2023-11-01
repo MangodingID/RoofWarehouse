@@ -25,8 +25,13 @@ class ProductionChart extends ChartWidget
     {
         $warehouses = Warehouse::warehouse()->get()->map(function (Warehouse $warehouse, $i) {
             $bg = [
-                'rgba(255, 99, 132, .2)',
-                'rgba(45, 212, 191, .4)',
+                'rgba(252, 165, 165, 0.5)',
+                'rgba(134, 239, 172, 0.5)',
+            ];
+
+            $bd = [
+                'rgba(252, 165, 165, 1.0)',
+                'rgba(134, 239, 172, 1.0)',
             ];
 
             $data = [];
@@ -39,6 +44,7 @@ class ProductionChart extends ChartWidget
                 'data'            => $data,
                 'fill'            => true,
                 'backgroundColor' => $bg[$i],
+                'borderColor'     => $bd[$i],
             ];
         });
 

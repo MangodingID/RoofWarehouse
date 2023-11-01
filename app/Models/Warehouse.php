@@ -23,6 +23,14 @@ class Warehouse extends Model
     ];
 
     /**
+     * @return int
+     */
+    public function getRemainderAttribute() : int
+    {
+        return $this->productions->sum('amount') - $this->transactions->sum('amount');
+    }
+
+    /**
      * @param  Builder $query
      * @return mixed
      */
@@ -43,8 +51,24 @@ class Warehouse extends Model
     /**
      * @return HasMany
      */
-    public function productions() : \Illuminate\Database\Eloquent\Relations\HasMany
+    public function materials() : HasMany
+    {
+        return $this->hasMany(Material::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function productions() : HasMany
     {
         return $this->hasMany(Production::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function transactions() : HasMany
+    {
+        return $this->hasMany(Transaction::class);
     }
 }

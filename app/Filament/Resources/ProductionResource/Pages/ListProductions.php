@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ProductionResource\Pages;
 
 use App\Filament\Resources\ProductionResource;
+use App\Models\Owner;
 use App\Models\Warehouse;
 use Filament\Actions;
 use Filament\Actions\Action;
@@ -12,8 +13,11 @@ use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class ListProductions extends ListRecords
 {
@@ -25,6 +29,7 @@ class ListProductions extends ListRecords
     protected function getHeaderWidgets() : array
     {
         return [
+            ProductionResource\Widgets\ProductionOverview::class,
             ProductionResource\Widgets\ProductionChart::class,
         ];
     }
@@ -54,7 +59,43 @@ class ListProductions extends ListRecords
             ->actions([
                 EditAction::make('edit'),
                 DeleteAction::make('delete')->requiresConfirmation(),
-            ]);
+            ])
+            ->bulkActions([
+                ExportBulkAction::make(),
+            ])
+            ->filters([
+                SelectFilter::make('owner_id')
+                    ->label('Penggesek')
+                    ->searchable()
+                    ->options(Owner::get()->pluck('name', 'id')),
+
+                SelectFilter::make('month')
+                    ->label('Bulan')
+                    ->searchable()
+                    ->options(months())
+                    ->query(function ($query, $data) {
+                        $query->when($data['value'], function ($query) use ($data) {
+                            $query->whereMonth('date', $data['value']);
+                        });
+                    }),
+
+                SelectFilter::make('year')
+                    ->label('Tahun')
+                    ->searchable()
+                    ->options(function () {
+                        $years = [];
+                        foreach (range(2022, date('Y')) as $year) {
+                            $years[$year] = $year;
+                        }
+
+                        return $years;
+                    })
+                    ->query(function ($query, $data) {
+                        $query->when($data['value'], function ($query) use ($data) {
+                            $query->whereYear('date', $data['value']);
+                        });
+                    }),
+            ], FiltersLayout::AboveContent);
     }
 
     /**

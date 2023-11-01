@@ -45,5 +45,9 @@ function format_money(mixed $amount) : string
  */
 function format_number(mixed $value) : string
 {
+    if (! is_numeric($value)) {
+        return $value;
+    }
+
     return number_format($value, 0, ',', '.');
 }

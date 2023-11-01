@@ -22,7 +22,7 @@ class ProductionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-circle-stack';
 
-    protected static ?string $navigationLabel = 'Produksi Harian';
+    protected static ?string $navigationLabel = 'Produksi Sirap';
 
     protected static ?string $navigationGroup = 'PRODUKSI';
 

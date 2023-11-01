@@ -18,9 +18,33 @@ class Owner extends Model
     ];
 
     /**
+     * @return mixed
+     */
+    public function getTotalMaterialAttribute() : float
+    {
+        return $this->materials->sum('amount');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalProductionAttribute() : float
+    {
+        return $this->productions->sum('amount');
+    }
+
+    /**
      * @return HasMany
      */
-    public function productions() : \Illuminate\Database\Eloquent\Relations\HasMany
+    public function materials() : HasMany
+    {
+        return $this->hasMany(Material::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function productions() : HasMany
     {
         return $this->hasMany(Production::class);
     }

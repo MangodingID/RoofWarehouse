@@ -42,6 +42,10 @@
             .text-white {
                 color: white;
             }
+
+            .font-semibold {
+                font-weight: bolder;
+            }
         </style>
     </head>
     <body>
@@ -61,21 +65,21 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($data as $name => $result)
-                    @php($total = 0)
+                @foreach($data as $row)
+                    @php($grandTotal += $row['data']->sum())
                     <tr>
-                        <td class="border p-2">{{ $name }}</td>
-                        @foreach($result as $result)
-                            @php($total += $result)
-                            <td class="border p-2 text-center text-sm {{ $result === 0 ? 'text-white' : '' }} {{ $result === 0 ? 'bg-rose-400' : '' }}">{{ $result === 0 ? '-' : $result }}</td>
+                        <td class="border p-2">{{ $row['name'] }}</td>
+                        @foreach($row['data'] as $amount)
+                            <td class="border p-2 text-center text-sm {{ $amount === 0 ? 'text-white' : '' }} {{ $amount === 0 ? 'bg-rose-400' : '' }}">
+                                {{ format_number($amount === 0 ? '' : $amount) }}
+                            </td>
                         @endforeach
-                        <td class="border p-2 text-center font-semibold">{{ $total }}</td>
+                        <td class="border p-2 text-center font-semibold">{{ format_number($row['data']->sum()) }}</td>
                     </tr>
                 @endforeach
                 <tr>
-                    <td class="border p-2"></td>
-                    <td class="border p-2 text-end font-semibold" colspan="{{  $maxDays }}">GRAND TOTAL</td>
-                    <td class="border p-2 text-center font-semibold">{{ $grandTotal }}</td>
+                    <td class="border p-2 text-end font-semibold" colspan="{{ $maxDays + 1 }}">GRAND TOTAL</td>
+                    <td class="border p-2 text-center font-semibold">{{ format_number($grandTotal) }}</td>
                 </tr>
             </tbody>
         </table>

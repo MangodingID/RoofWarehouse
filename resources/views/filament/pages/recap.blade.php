@@ -1,5 +1,5 @@
 <x-filament-panels::page>
-    <div class="bg-white border rounded-2xl p-5">
+    <div class="bg-primary border rounded-2xl p-5">
         <div class="flex justify-end">
 
             <select wire:model="warehouse" wire:change="refresh" class="c-select mr-2">
@@ -48,16 +48,16 @@
                         <td class="border p-2">{{ $row['name'] }}</td>
                         @foreach($row['data'] as $amount)
                             <td class="border p-2 text-center text-sm {{ $amount === 0 ? 'text-white' : '' }} {{ $amount === 0 ? 'bg-rose-400' : '' }}">
-                                {{ $amount === 0 ? '' : $amount }}
+                                {{ format_number($amount === 0 ? '' : $amount) }}
                             </td>
                         @endforeach
-                        <td class="border p-2 text-center font-semibold">{{ $row['data']->sum() }}</td>
+                        <td class="border p-2 text-center font-semibold">{{ format_number($row['data']->sum()) }}</td>
                     </tr>
                 @endforeach
                 <tr>
                     <td class="border p-2"></td>
                     <td class="border p-2 text-end font-semibold" colspan="{{ $this->maxDays() }}">GRAND TOTAL</td>
-                    <td class="border p-2 text-center font-semibold">{{ $grandTotal }}</td>
+                    <td class="border p-2 text-center font-semibold">{{ format_number($grandTotal) }}</td>
                 </tr>
             </tbody>
         </table>
