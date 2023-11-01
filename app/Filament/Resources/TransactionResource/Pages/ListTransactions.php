@@ -3,13 +3,17 @@
 namespace App\Filament\Resources\TransactionResource\Pages;
 
 use App\Filament\Resources\TransactionResource;
+use App\Filament\Widgets\TransactionOverviewTabsWidget;
 use App\Models\Warehouse;
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -23,6 +27,7 @@ class ListTransactions extends ListRecords
     protected function getHeaderWidgets() : array
     {
         return [
+            TransactionOverviewTabsWidget::class,
             TransactionResource\Widgets\TransactionChart::class,
         ];
     }
@@ -43,11 +48,19 @@ class ListTransactions extends ListRecords
     {
         return $table
             ->columns([
-                TextColumn::make('date')->label('Tanggal Produksi')->date('d M Y'),
+                TextColumn::make('date')->label('Tanggal Penjualan')->date('d M Y'),
                 TextColumn::make('warehouse.name')->label('Gudang'),
                 TextColumn::make('amount')->label('Jumlah'),
                 TextColumn::make('price')->label('Harga Satuan')->money('IDR', true),
                 TextColumn::make('total')->label('Total')->money('IDR', true),
+                TextColumn::make('created_at')->label('Tanggal Input')->date('d M Y H:i:s'),
+            ])
+            ->actions([
+                EditAction::make('edit')->label('UBAH'),
+                DeleteAction::make('delete')->label('HAPUS')->requiresConfirmation(),
+            ])
+            ->filters([
+                SelectFilter::make('warehouse_id')->options(Warehouse::warehouse()->get()->pluck('name', 'id'))->label('Gudang'),
             ]);
     }
 

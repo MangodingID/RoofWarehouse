@@ -37,6 +37,17 @@ class Transaction extends Model
     }
 
     /**
+     * @param  Builder $query
+     * @param  int     $month
+     * @param  int     $year
+     * @return Builder
+     */
+    public function scopePeriod(Builder $query, int $month, int $year) : Builder
+    {
+        return $query->whereMonth('date', $month)->whereYear('date', $year);
+    }
+
+    /**
      * @return BelongsTo
      */
     public function warehouse() : \Illuminate\Database\Eloquent\Relations\BelongsTo

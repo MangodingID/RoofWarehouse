@@ -80,7 +80,7 @@ class ProductionRecap extends Page
     {
         return [
             null => 'Semua Gudang',
-            ...Warehouse::all()->pluck('name', 'id')->toArray(),
+            ...Warehouse::warehouse()->pluck('name', 'id')->toArray(),
         ];
     }
 }

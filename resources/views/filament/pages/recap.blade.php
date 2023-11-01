@@ -28,7 +28,7 @@
 
             </x-filament::icon-button>
         </div>
-        <table class="table-auto w-full mt-3 border rounded">
+        <table class="table-auto w-full mt-5 border rounded">
             <thead>
                 <tr>
                     <th class="border p-2" rowspan="2">NAMA</th>

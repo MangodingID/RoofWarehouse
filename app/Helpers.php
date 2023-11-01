@@ -29,3 +29,21 @@ function month(string $month) : string
 {
     return months()[$month] ?? $month;
 }
+
+/**
+ * @param  mixed $amount
+ * @return string
+ */
+function format_money(mixed $amount) : string
+{
+    return 'Rp ' . format_number($amount);
+}
+
+/**
+ * @param  mixed $value
+ * @return string
+ */
+function format_number(mixed $value) : string
+{
+    return number_format($value, 0, ',', '.');
+}

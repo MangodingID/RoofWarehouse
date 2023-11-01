@@ -22,16 +22,23 @@ class TransactionChart extends ChartWidget
     protected function getData() : array
     {
         $data = [];
+        $total = [];
 
-        Warehouse::warehouse()->get()->each(function (Warehouse $warehouse, int $i) use (&$data) {
+        Warehouse::warehouse()->get()->each(function (Warehouse $warehouse, int $i) use (&$data, &$total) {
             $selling = [];
-            collect($this->getRangeOfPeriods())->each(function ($date) use ($warehouse, &$selling) {
-                $selling[] = Transaction::source($warehouse)->whereMonth('date', $date->format('m'))->whereYear('date', $date->format('Y'))->sum('amount');
+            collect($this->getRangeOfPeriods())->each(function ($date, $i) use ($warehouse, &$selling, &$total) {
+                $selling[$i] = Transaction::source($warehouse)->whereMonth('date', $date->format('m'))->whereYear('date', $date->format('Y'))->sum('amount');
+                $total[$i] = $selling[$i] + ($total[$i] ?? 0);
             });
 
             $bg = [
-                'rgba(255, 99, 132, .2)',
-                'rgba(45, 212, 191, .4)',
+                'rgba(252, 165, 165, 0.5)',
+                'rgba(134, 239, 172, 0.5)',
+            ];
+
+            $bd = [
+                'rgba(252, 165, 165, 1.0)',
+                'rgba(134, 239, 172, 1.0)',
             ];
 
             $data[] = [
@@ -39,8 +46,19 @@ class TransactionChart extends ChartWidget
                 'data'            => $selling,
                 'fill'            => true,
                 'backgroundColor' => $bg[$i],
+                'borderColor'     => $bd[$i],
             ];
         });
+
+        $data = array_merge($data, [
+            [
+                'label'           => 'Semua Gudang',
+                'data'            => $total,
+                'fill'            => true,
+                'backgroundColor' => 'rgba(165, 180, 252, 0.5)',
+                'borderColor'     => 'rgba(165, 180, 252, 1.0)',
+            ],
+        ]);
 
         return [
             'datasets' => $data,
