@@ -14,6 +14,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class ListMaterials extends ListRecords
 {
@@ -54,6 +55,9 @@ class ListMaterials extends ListRecords
             ->actions([
                 EditAction::make('edit')->label('UBAH'),
                 DeleteAction::make('delete')->label('HAPUS')->requiresConfirmation(),
+            ])
+            ->bulkActions([
+                ExportBulkAction::make(),
             ])
             ->filters([
                 SelectFilter::make('owner_id')
