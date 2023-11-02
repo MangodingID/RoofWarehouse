@@ -33,6 +33,6 @@ class ExportController extends Controller
             'grandTotal' => 0,
         ]);
 
-        return $pdf->setPaper('B4', 'landscape')->stream(str($filename)->snake()->lower() . '.pdf');
+        return $pdf->setPaper('B4', 'landscape')->download(str($filename)->snake()->lower() . '.pdf');
     }
 }
