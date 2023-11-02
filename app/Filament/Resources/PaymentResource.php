@@ -31,6 +31,30 @@ class PaymentResource extends Resource
         return 'Pembayaran';
     }
 
+    /**
+     * @return string
+     */
+    public static function getBreadcrumb() : string
+    {
+        return static::getNavigationLabel();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getModelLabel() : string
+    {
+        return static::getNavigationLabel();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getPluralModelLabel() : string
+    {
+        return static::getNavigationLabel();
+    }
+
     public static function form(Form $form) : Form
     {
         return $form

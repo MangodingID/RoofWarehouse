@@ -30,6 +30,30 @@ class ProductionRecap extends Page
     protected static ?int $navigationSort = 3;
 
     /**
+     * @return string
+     */
+    public static function getBreadcrumb() : string
+    {
+        return static::getNavigationLabel();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getModelLabel() : string
+    {
+        return static::getNavigationLabel();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getPluralModelLabel() : string
+    {
+        return static::getNavigationLabel();
+    }
+
+    /**
      * @return void
      */
     public function mount() : void

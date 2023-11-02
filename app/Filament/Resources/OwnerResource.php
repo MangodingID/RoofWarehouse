@@ -31,6 +31,30 @@ class OwnerResource extends Resource
     }
 
     /**
+     * @return string
+     */
+    public static function getBreadcrumb() : string
+    {
+        return static::getNavigationLabel();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getModelLabel() : string
+    {
+        return static::getNavigationLabel();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getPluralModelLabel() : string
+    {
+        return static::getNavigationLabel();
+    }
+
+    /**
      * @param  Table $table
      * @return Table
      */

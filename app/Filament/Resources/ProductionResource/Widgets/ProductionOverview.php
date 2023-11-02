@@ -14,23 +14,39 @@ class ProductionOverview extends BaseWidget
      */
     protected function getStats() : array
     {
-        $totalProductionWarehouses = Warehouse::warehouse()->get()->map(function ($warehouse) {
+        $totalProductionWarehouses = Warehouse::warehouse()->get()->map(function ($warehouse, $i) {
+            $cls = [
+                'success', 'info', 'warning', 'danger',
+            ];
+
             return Stat::make('Total Produksi ' . $warehouse->name, format_number(
                 Production::source($warehouse)->sum('amount')
-            ));
+            ))
+                ->chart(random_chart_data())
+                ->color($cls[$i]);
         });
 
-        $totalProductionWarehousesThisMonth = Warehouse::warehouse()->get()->map(function ($warehouse) {
+        $totalProductionWarehousesThisMonth = Warehouse::warehouse()->get()->map(function ($warehouse, $i) {
+            $cls = [
+                'success', 'info', 'warning', 'danger',
+            ];
+
             return Stat::make('Total Produksi ' . $warehouse->name, format_number(
                 Production::source($warehouse)->period(date('m'), date('Y'))->sum('amount')
-            ));
+            ))
+                ->chart(random_chart_data())
+                ->color($cls[$i]);
         });
 
         return [
-            Stat::make('Total Produksi', format_number(Production::sum('amount'))),
+            Stat::make('Total Produksi', format_number(Production::sum('amount')))
+                ->chart(random_chart_data())
+                ->color('danger'),
             ...$totalProductionWarehouses->toArray(),
 
-            Stat::make('Total Produksi Bulan Ini', format_number(Production::period(date('m'), date('Y'))->sum('amount'))),
+            Stat::make('Total Produksi Bulan Ini', format_number(Production::period(date('m'), date('Y'))->sum('amount')))
+                ->chart(random_chart_data())
+                ->color('danger'),
             ...$totalProductionWarehousesThisMonth->toArray(),
         ];
     }

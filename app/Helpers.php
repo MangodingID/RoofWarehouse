@@ -51,3 +51,16 @@ function format_number(mixed $value) : string
 
     return number_format($value, 0, ',', '.');
 }
+
+/**
+ * @return array
+ */
+function random_chart_data() : array
+{
+    $randomNumbers = [];
+    for ($i = 0; $i < 7; $i++) {
+        $randomNumbers[] = rand(5, 30);
+    }
+
+    return $randomNumbers;
+}

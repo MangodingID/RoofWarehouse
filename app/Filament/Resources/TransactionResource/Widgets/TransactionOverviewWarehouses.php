@@ -37,10 +37,18 @@ class TransactionOverviewWarehouses extends BaseWidget
         $transactionPeriod = $this->getTransactionsPeriod();
 
         return [
-            Stat::make('Total Penjualan', format_money($transaction->sum('total'))),
-            Stat::make('Total Sirap Terjual', format_number($transaction->sum('amount'))),
-            Stat::make('Penjualan Bulan Ini', format_money($transactionPeriod->sum('total'))),
-            Stat::make('Sirap Terjual Bulan Ini', format_number($transactionPeriod->sum('amount'))),
+            Stat::make('Total Penjualan', format_money($transaction->sum('total')))
+                ->chart(random_chart_data())
+                ->color('success'),
+            Stat::make('Total Sirap Terjual', format_number($transaction->sum('amount')))
+                ->chart(random_chart_data())
+                ->color('info'),
+            Stat::make('Penjualan Bulan Ini', format_money($transactionPeriod->sum('total')))
+                ->chart(random_chart_data())
+                ->color('warning'),
+            Stat::make('Sirap Terjual Bulan Ini', format_number($transactionPeriod->sum('amount')))
+                ->chart(random_chart_data())
+                ->color('danger'),
         ];
     }
 

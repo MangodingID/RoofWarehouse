@@ -17,13 +17,17 @@ class MaterialOverview extends BaseWidget
         $totalProductionWarehouses = Warehouse::bengkulangan()->get()->map(function ($warehouse) {
             return Stat::make('Total Jumlah Masuk Bengkulangan', format_number(
                 Material::source($warehouse)->sum('amount')
-            ));
+            ))
+                ->chart(random_chart_data())
+                ->color('success');
         });
 
         $totalProductionWarehousesThisMonth = Warehouse::bengkulangan()->get()->map(function ($warehouse) {
             return Stat::make('Jumlah Masuk Bengkulangan Bulan Ini', format_number(
                 Material::source($warehouse)->period(date('m'), date('Y'))->sum('amount')
-            ));
+            ))
+                ->chart(random_chart_data())
+                ->color('warning');
         });
 
         return [

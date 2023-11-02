@@ -21,7 +21,7 @@
             </select>
 
             <x-filament::icon-button
-                class="ml-2 mr-0.5 bg-blue-500 hover:bg-blue-600 hover:text-white text-white mt-0.5"
+                class="ml-2 mr-0.5 li bg-blue-600 hover:text-white text-white mt-0.5"
                 icon="heroicon-o-arrow-down-tray"
                 wire:click="export"
             >
