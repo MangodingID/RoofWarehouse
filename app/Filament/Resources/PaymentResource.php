@@ -61,6 +61,12 @@ class PaymentResource extends Resource
             ->schema([
                 Forms\Components\Select::make('owner_id')
                     ->label('Penggesek')
+                    ->createOptionForm([
+                        TextInput::make('name')->label('Nama')->required(),
+                    ])
+                    ->createOptionUsing(function (array $data) {
+                        Owner::create($data);
+                    })
                     ->searchable()
                     ->options(Owner::get()->pluck('name', 'id'))
                     ->columnSpan(2)
