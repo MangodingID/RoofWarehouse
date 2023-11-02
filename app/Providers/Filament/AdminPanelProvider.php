@@ -31,6 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(
                 \Hasnayeen\Themes\ThemesPlugin::make()
             )
+            ->sidebarCollapsibleOnDesktop()
             ->viteTheme('resources/css/filament/panel/theme.css')
             ->maxContentWidth('full')
             ->sidebarWidth('250px')
