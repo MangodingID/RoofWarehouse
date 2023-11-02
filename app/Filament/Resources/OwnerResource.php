@@ -11,6 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class OwnerResource extends Resource
 {
@@ -72,6 +73,9 @@ class OwnerResource extends Resource
                     ->formatStateUsing(function ($state) {
                         return format_number($state);
                     }),
+            ])
+            ->bulkActions([
+                ExportBulkAction::make(),
             ])
             ->filters([
                 SelectFilter::make('id')
