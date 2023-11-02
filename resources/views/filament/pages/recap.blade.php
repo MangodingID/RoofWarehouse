@@ -1,5 +1,5 @@
 <x-filament-panels::page>
-    <div class="bg-primary border rounded-2xl p-5">
+    <div class="bg-primary border rounded-2xl p-5 overflow-auto">
         <div class="flex justify-end">
 
             <select wire:model="warehouse" wire:change="refresh" class="c-select mr-2">

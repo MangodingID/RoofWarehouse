@@ -16,16 +16,14 @@ class ExportController extends Controller
         $month = $request->get('month');
         $warehouse = $request->get('warehouse');
 
+        $filename = strtolower(sprintf('recap-%s-%s', $year, $month));
         if ($warehouse === 'ALL') {
             $warehouse = null;
-
-            $filename = strtolower(sprintf('recap-%s-%s', $year, $month));
         }
 
-        if($warehouse) {
+        if ($warehouse) {
             $filename = strtolower(sprintf('recap-%s-%s-%s', $year, $month, Warehouse::find($warehouse)->name));
         }
-
 
         $pdf = Pdf::loadView('recap', [
             'year'       => $year,
