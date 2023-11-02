@@ -14,7 +14,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class ListPayments extends ListRecords
@@ -87,7 +86,7 @@ class ListPayments extends ListRecords
     protected function getHeaderActions() : array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()->label('TAMBAH')->icon('heroicon-o-plus'),
         ];
     }
 }

@@ -106,7 +106,7 @@ class ListTransactions extends ListRecords
     protected function getHeaderActions() : array
     {
         return [
-            Actions\CreateAction::make()->label('TAMBAH')->icon('heroicon-o-plus')->createAnother(false)->modalWidth('3xl'),
+            Actions\CreateAction::make()->label('TAMBAH')->icon('heroicon-o-plus')->modalWidth('3xl'),
         ];
     }
 

@@ -104,7 +104,7 @@ class ListProductions extends ListRecords
     protected function getHeaderActions() : array
     {
         return [
-            Actions\CreateAction::make()->label('TAMBAH')->icon('heroicon-o-plus')->createAnother(false),
+            Actions\CreateAction::make()->label('TAMBAH')->icon('heroicon-o-plus'),
         ];
     }
 
